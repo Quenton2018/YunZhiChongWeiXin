@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>云智充-用户反馈</title>
+    <link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" href="layer/theme/default/layer.css" />
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/mui.min.js"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/common.js"></script>
+    <style type="text/css">
+    	.mui-table-view-cell>.mui-badge{right: 26px;top: 22px;background-color: transparent;color: #414141;}
+    	.mui-table-view-cell.mui-collapse .mui-collapse-content{position: absolute;top: 0;right: 15px;z-index: 999;}
+    	.mui-table-view-cell:after{height: 0;}
+    	#textarea{background-color: #fafafa;font-size: 14px;border-width: 0;box-shadow: 1px 1px 2px 1px #ccc;margin-bottom: 0;}
+    	.mui-card .mui-input-row{padding: 0 0;margin: 0;}
+    	.mui-table-view-cell>a:not(.mui-btn){margin-top: -8px;}
+    	.mui-icon-image{color: #aaa9a9;}
+    	.top{padding: 10px 15px;}
+    	.top span{font-size: 14px;}
+    	.file {
+		    position: relative;
+		    display: inline-block;
+		    border: 1px dashed #c4c4c4;
+		    border-radius: 5px;
+		    overflow: hidden;
+		    color: #a8a8a8;
+		    text-decoration: none;
+		    width: 80px;
+		    height: 80px;
+		    font-size: 35px;
+		    text-align: center;
+		    line-height: 75px;
+		    z-index: 50;
+		    vertical-align: top;
+		}
+		.file input {position: absolute;height: 100%;left: 0;top: 0;opacity: 0;width: 80px;vertical-align: top;}
+		.tel{display: flex;justify-content: space-between;}
+		.tel span{display: inline-block;width: 100px;line-height: 30px;}
+		.tel input{margin-bottom: 0;height: 30px;font-size: 14px;}
+		i.mui-icon-star{font-size:20px;}
+		i.mui-icon-star-filled{color:#ff6d22;font-size:20px;}
+		.marbot{margin-bottom: 80px;}
+		.comment{position: absolute;z-index: 999;top: 40px;right: 5px;background-color: #fff;width: 150px;}
+		.mui-plus .plus{display: inline;}
+		.plus{display: none;}
+		#topPopover {position: fixed;top: 16px;right: 6px;}
+		#topPopover .mui-popover-arrow {left: auto;right: 6px;}
+		.mui-popover {height: 200px;width: 300px;}
+		.mui-popover a{font-size: 14px;}
+		.mui-table-view-cell{padding: 10px 15px;}
+		.mui-popover .mui-table-view-cell>a:not(.mui-btn){margin-top: -18px;}
+		.quick{position: absolute;top: 8px;right: 30px;height: 30px;}
+		.quick a{color: black;font-size: 14px;}
+		.top .close{display: inline-block;position: relative;}
+		.top .close .img{opacity: 1;width: 45px;height: 80px;margin: 0 3px;}
+		.top .close i{opacity: 1;position: absolute;top: -2px;right: 0;font-size: 20px;color: #fff;margin: 0 3px;
+			display: inline-block;border-radius: 50%;background-color: #000;width: 22px;height: 22px;
+			text-align: center;line-height: 22px;}
+		.top .showFileName1{color: red;font-size: 12px;display: none;}
+		.imglist{display: inline-block;}
+		.upload-box{margin-top: 10px;}
+		.big_img{width: 100%;height: 100%;position: fixed;left: 0;top: 0;background-color: black;z-index: 999;display: none;overflow: hidden;}
+  </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav header-immersed">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">用户反馈</h1>
+	</header>
+	<!--显示放大的图片-->
+	<div class="big_img"></div>
+	<!--主体-->
+	<div class="mui-content">
+	    <div class="mui-card">
+	    	<ul class="mui-table-view">
+	    		<li class="mui-table-view-cell remo">意见反馈
+					<span class="mui-icon mui-icon-arrowdown mui-pull-right"></span>
+				</li>
+				<div class="quick"><a href="#topPopover">快捷输入</a></div>
+				<div class="mui-input-row" style="margin: -3px 0 -5px 0;">
+					<textarea id="textarea" name="textarea" rows="5" placeholder="请输入您的宝贵意见"></textarea>
+				</div>
+	    	</ul>
+	    </div>
+	    <div class="mui-card">
+	    	<div class="top">
+	    		<div class="mui-icon mui-icon-image">
+	    			<span>上传照片</span>
+	    		</div>
+	    		<div>
+	    			<form action="#">
+	    				<div class="upload-box">
+	    					<div class="imglist"></div>
+		    				<a href="javascript:;" class="file">+
+		    					<input type="file" multiple="multiple"  name="file" id="file" value="" />
+		    				</a>
+	    				</div>
+	    				<div class="showFileName1"></div>
+	    			</form>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="mui-card">
+	    	<ul class="mui-table-view">
+	    		<li class="mui-table-view-cell">
+	    			<div class="tel">
+	    				<span>联系方式：</span>
+	    				<input type="text" name="mobil" placeholder="手机号码/QQ邮箱"/>
+	    			</div>
+	    		</li>
+	    	</ul>
+	    </div>
+	    <div class="mui-card marbot">
+	    	<ul class="mui-table-view">
+	    		<li class="mui-table-view-cell">
+	    			<div starName="bzxl" class="icons mui-inline">应用评分：
+						<i data-index="1" class="mui-icon mui-icon-star"></i>
+						<i data-index="2" class="mui-icon mui-icon-star"></i>
+						<i data-index="3" class="mui-icon mui-icon-star"></i>
+						<i data-index="4" class="mui-icon mui-icon-star"></i>
+						<i data-index="5" class="mui-icon mui-icon-star"></i>
+					</div>
+					<input type="hidden" name="bzxl" id="bzxl" value="0"/>
+	    		</li>
+	    	</ul>
+	    </div>
+	</div>
+	<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view evaluate">
+						<li class="mui-table-view-cell"><a href="#">安全，快捷，实惠，放心！</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">这款产品很好！</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">自从有了这个充电桩，真的方便不能太多了！</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">软件不错，蛮实用的，希望越来越强大！</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">非常方便，解决了小区充电难的问题！</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">特别好用，给一万个赞！</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">再也不怕车被盗了！</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	<footer class="mui-bar mui-bar-footer btn-submit">
+		<span>提交</span>
+	</footer>
+	
+	
+	<script type="text/javascript">
+		$('.icons').on('tap','i',function(){
+		  	var index = parseInt(this.getAttribute("data-index"));
+		  	var parent = this.parentNode;
+		  	var children = parent.children;
+		  	if(this.classList.contains("mui-icon-star")){
+		  		for(var i=0;i<index;i++){
+	  				children[i].classList.remove('mui-icon-star');
+	  				children[i].classList.add('mui-icon-star-filled');
+		  		}
+		  	}else{
+		  		for (var i = index; i < 5; i++) {
+		  			children[i].classList.add('mui-icon-star')
+		  			children[i].classList.remove('mui-icon-star-filled')
+		  		}
+		  	};
+		  	starIndex = index;
+		    var starName = $(this).parents('.icons').attr("starName");
+			document.getElementById(""+starName+"").value = starIndex;
+		});
+		mui('.mui-scroll-wrapper').scroll();
+		mui('body').on('shown', '.mui-popover', function(e) {
+			//console.log('shown', e.detail.id);//detail为当前popover元素
+		});
+		var eLi = $('.evaluate li');
+		eLi.click(function(){
+			var Inp = $('#textarea');
+			console.log($(this).text());
+			if(Inp.val() == ''){
+				Inp.val($(this).text());
+			}else{
+				Inp.val(Inp.val().replace(/(^\s*)|(\s*$)/g, "")+'\n'+$(this).text().replace(/(^\s*)|(\s*$)/g, ""))
+			};
+			$('.mui-popover').hide();
+			$('.mui-backdrop').hide();
+			$('#topPopover').removeClass('mui-active')
+		});
+		$(".file").on("change","input[type='file']",function(){
+			var $that = $(this);
+		    var fr = new FileReader();//创建new FileReader()对象
+		    var imgObj = this.files[0];//获取图片
+		    fr.readAsDataURL(imgObj);//将图片读取为DataURL
+			var imgName = imgObj.name;
+			console.log(imgName)
+			var Imgsrc = '';
+		    if(imgName.indexOf("jpg") != -1 || imgName.indexOf("JPG") != -1 || imgName.indexOf("PNG") != -1 || imgName.indexOf("png") != -1 || imgName.indexOf("jpeg") != -1){
+		    	fr.onload = function() {
+					Imgsrc = this.result;
+					var html =  "<span class='close'><img class='img' src='"+Imgsrc+"'><i>×</i></span>";
+					$(".imglist").append(html)
+				};
+				$(".showFileName1").hide();
+		    }else{
+		        $(".showFileName1").html("您未上传文件，或者您上传文件类型有误！").show();
+		        return false
+		    };
+		    
+		});
+		$('.imglist').on("click",".close i",function(){
+			$(this).parent().hide();
+		});
+		$('.imglist').on("click",".close img",function(){
+		   var large_image = '<img src= ' + $(this).attr("src") + '>'; 
+		   $('.big_img').show();
+		   $('.big_img').html($(large_image).animate({'max-height': '100%', width: '100%'}, 500));
+		});
+		$('.big_img').click(function(){
+			$('.big_img').hide(500);
+		});
+		//提交 
+		$(".btn-submit").click(function(){
+			var Textarea = $("#textarea").val();
+            if(!vaildeParam(Textarea)){
+                layer.msg("请提出宝贵意见哦!");
+                return;
+            };
+            var photos = $(".imglist").text();
+            if(!vaildeParam(photos)){
+                layer.msg("请上传图片!");
+                return;
+            };
+            var mobile = $("input[name='mobil']").val();
+            if(!vaildeParam(mobile)){
+                layer.msg("选择联系方式方便我们及时联系你!");
+                return;
+            };
+            var star = $("input[name='bzxl']").val();
+            if(!vaildeParam(star)||star==0){
+                layer.msg("请给我们评分哦!");
+                return;
+            };
+            var data = {
+                "Textarea":Textarea,
+                "photos":photos,
+                "mobile":mobile,
+                "star":star
+            };
+//          postJSON(API_URL.ApiApplyBusinessSaveApplyBusiness,data,function(res){
+//              if("0" == res.code){
+//                  layer.msg("您的反馈，我们已经收到，即将返回首页");
+//                  setTimeout(function(){
+//                      back();
+//                  },3000);
+//              }else{
+//                  layer.msg(res.msg);
+//              }
+//          });
+			layer.msg("您的反馈，我们已经收到，即将返回首页");
+            setTimeout(function(){
+                location.href = "index.html";
+            },3000);
+		})
+
+	</script>
+</body>

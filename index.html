@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>云智充-首页</title>
+    <link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/mui.min.js"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/common.js"></script>
+    <style type="text/css">
+    	.socket,.cdtime{padding: 20px 25px;border-radius: 10px;background-color: #fff;margin-top: 24px;}
+    	.socket_top img{width: 20px;height: 20px;vertical-align: middle;}
+    	.socket_bottom{width: 100%;padding: 25px 30px 0 30px;display: flex;justify-content: space-between;text-align: center;}
+    	.socket_bottom img{height: 60px;border: 1px solid transparent;border-radius: 50%;}
+    	.socket_bottom .cz{position: relative;padding-bottom: 30px;}
+    	.socket_bottom .cz .num{width: 20px;height: 20px;text-align: center;line-height: 20px;border: 1px solid #999;border-radius: 50%;position: absolute;left: 35%;top: 80px;}
+ 		.cdtime .select-time{padding: 15px 25px;display: flex;justify-content: space-between;}
+ 		.select-time .select-active{padding: 10px 0;width:100px;border-radius: 20px;background-color: #ff6d22;color: #fff;text-align: center;}
+ 		.select-time .select{background-color: #f2f2f2;padding: 10px 0;width:100px;border-radius: 20px;text-align: center;}
+ 		.mean{padding: 20px 50px;margin-bottom: 50px;}
+ 		.mean span{color: #a7a8a8;}
+ 		.mean span:first-child{font-size: 14px;}
+ 		.mean span:last-child{font-size: 12px;}
+ 		.mui-bar .feedback{margin-top: 12px;color: #fff;font-size: 14px;}
+ 		.btn-submit{opacity: 0.5;}
+  </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav header-immersed">
+		<a class="mui-pull-left feedback" onclick="clicked('cdRecord.html')">充电记录</a>
+	    <h1 class="mui-title">充电桩:A4536</h1>
+	    <a class="mui-pull-right feedback" onclick="clicked('feedback.html')">反馈</a>
+	</header>
+	<div class="mui-content">
+	    <div class="socket">
+	    	<div class="socket_top">
+	    		<img src="img/eq.png"/>
+	    		<span>选择可用插座号</span>
+	    	</div>
+	    	<div class="socket_bottom">
+	    		<div class="cz" data-type="oN">
+	    			<img src="img/CD.png"/>
+	    			<div class="num">1</div>
+	    		</div>
+	    		<div class="cz" data-type="oN">
+	    			<img src="img/CD.png"/>
+	    			<div class="num">2</div>
+	    		</div>
+	    		<div class="cz" data-type="oFF">
+	    			<img src="img/CD.png"/>
+	    			<div  class="num">3</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="cdtime">
+	    	<div class="socket_top">
+	    		<img src="img/eq.png"/>
+	    		<span>选择充电时长</span>
+	    	</div>
+	    	<div class="select-time">
+	    		<div class="select change">
+	    			<span>4小时</span>
+	    		</div>
+	    		<div class="select change">
+	    			<span>6小时</span>
+	    		</div>
+	    	</div>
+	    	<div class="select-time">
+	    		<div class="select change">
+	    			<span>8小时</span>
+	    		</div>
+	    		<div class="select change">
+	    			<span>12小时</span>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="mean">
+    		<span>说明:</span>
+    		<span>选择插座号和充电时长后开始充电,充电完成,再次联桩更新桩户信息。</span>	    	
+	    </div>
+	</div>
+	<footer class="mui-bar mui-bar-footer btn-submit">
+		<span>开始充电</span>
+	</footer>
+	
+	
+	<script type="text/javascript">
+		var timeLight = false;
+		var cZLight = false;
+		$('.change').on('tap',function(){
+			$(this).removeClass('select').addClass('select-active').siblings().removeClass('select-active').addClass('select');
+			$(this).parent().siblings().find('.change').removeClass('select-active').addClass('select');
+			timeLight = true;
+			charge();
+		});
+		var arr = [];
+		//充电插座
+		for(var k=0;k<$('.cz img').length;k++){
+			var cdType = $('.cz img').eq(k).parent().attr('data-type');
+			if(cdType == 'oFF'){
+				$('.cz img').eq(k).attr({'src':'img/CDpass.png'});
+				$('.cz img').eq(k).addClass('using');
+				$('.using').css({'pointer-events':'none'});	
+			}else{
+				$('.cz img').on('tap',function(){
+					$('.cz img').removeClass('tpchange');
+					$(this).addClass('tpchange');
+					for(var i=0;i<$('.cz img').length;i++){
+						var flag = [];
+						flag = $('.cz img').eq(i).hasClass("tpchange");
+						if(flag == true){
+							$('.cz img').eq(i).attr({'src':'img/CDchange.png'});
+							$('.using').attr({'src':'img/CDpass.png'});
+							cZLight = true;
+							charge();
+							$('.using').css({'pointer-events':'none'});					//阻止div被选中
+						}else{
+							$('.cz img').eq(i).attr({'src':'img/CD.png'});
+							$('.using').attr({'src':'img/CDpass.png'});
+						};
+					};
+				})
+			};
+			arr.push(cdType)
+		};
+		if(arr.indexOf("oN") != -1){
+			var btnSbm = $(".btn-submit");
+			btnSbm.click(function(){
+				if ($('.tpchange').length == 0) {
+					layer.msg('请选择插座！');
+					return;
+				};
+				if ($('.select-active').length == 0) {
+					layer.msg('请选择充电时长！');
+					return;
+				};
+	            location.href = "cdRecord.html";
+			})
+		}else{
+			layer.msg("该充电桩暂无可用插座!");
+		};
+		function charge(){
+			if(timeLight&&cZLight){
+				$(".btn-submit").css({'opacity':'1'})
+			};
+		};
+		
+		
+		
+		
+	</script>
+</body>
+</html>
