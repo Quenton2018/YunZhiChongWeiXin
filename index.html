@@ -42,7 +42,7 @@
 	    		<span>选择可用插座号</span>
 	    	</div>
 	    	<div class="socket_bottom">
-	    		<div class="cz" data-type="oN">
+	    		<div class="cz" data-type="oFF">
 	    			<img src="img/CD.png"/>
 	    			<div class="num">1</div>
 	    		</div>
@@ -50,7 +50,7 @@
 	    			<img src="img/CD.png"/>
 	    			<div class="num">2</div>
 	    		</div>
-	    		<div class="cz" data-type="oFF">
+	    		<div class="cz" data-type="oN">
 	    			<img src="img/CD.png"/>
 	    			<div  class="num">3</div>
 	    		</div>
@@ -125,7 +125,7 @@
 					};
 				})
 			};
-			arr.push(cdType)
+			arr.push(cdType);
 		};
 		if(arr.indexOf("oN") != -1){
 			var btnSbm = $(".btn-submit");
@@ -133,12 +133,16 @@
 				if ($('.tpchange').length == 0) {
 					layer.msg('请选择插座！');
 					return;
+				}else{
+					console.log($('.tpchange').next().text())
 				};
 				if ($('.select-active').length == 0) {
 					layer.msg('请选择充电时长！');
 					return;
+				}else{
+					console.log($('.select-active').text())
 				};
-	            location.href = "cdRecord.html";
+//	            location.href = "cdRecord.html";	
 			})
 		}else{
 			layer.msg("该充电桩暂无可用插座!");
