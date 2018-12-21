@@ -21,8 +21,8 @@
 		.finish img{display: none;}
 		.mui-table-view-cell:after{left: 15px;right: 15px;}
 		.mui-table-view{margin-bottom: 20px;box-shadow: 1px 1px 2px 1px #ccc;padding-top: 10px;}
-		.mui-table-view-cell{padding: 6px 20px;}
-		.serial-number .use,.serial-number .finish{border-radius: 15px;text-align: center;padding: 1px 20px;text-align: center;}
+		.mui-table-view-cell{padding: 6px 15px;}
+		.serial-number .use,.serial-number .finish{border-radius: 15px;text-align: center;padding: 1px 15px;text-align: center;}
 		.serial-number .use span,.serial-number .finish span{font-size: 14px;}
 		.serial-number .use{border: 1px solid #ff762f;}
 		.serial-number .use span{color: #ff6d22;}
@@ -41,7 +41,7 @@
 		    <h1 class="mui-title">充电记录</h1>
 		</header>
 		<div class="mui-content">
-		    <ul class="mui-table-view">
+		    <ul class="mui-table-view" data-time='5'>
 			    <li class="mui-table-view-cell">
 		    		<div class="serial-number">
 		    			<div class="name_wrap">
@@ -69,23 +69,23 @@
 			    			<span>开始时间:10/21 10:21</span>
 			    		</div>
 			    		<div>
-			    			<span>剩余充电时长:<i class="residue">00:00:00</i></span>
+			    			<span class="end_time">剩余充电时长:<i class="residue">00:00:00</i></span>
 			    		</div>
 			    	</div>
 			    </li>
 			</ul>
-			<ul class="mui-table-view">
+			<ul class="mui-table-view" data-time='10'>
 			    <li class="mui-table-view-cell">
 		    		<div class="serial-number">
 		    			<div class="name_wrap">
 		    				<div>
 		    					<span class="cdz-name">充电桩编号A184137</span>
-		    					<span class="mark">1号</span>
+		    					<span class="mark">3号</span>
 		    				</div>
 		    			</div>
 		    			<div class="using">
-		    				<div class="finish">
-		    					<span>已完成</span>
+		    				<div class="use">
+		    					<span>充电中</span>
 		    					<img src="img/dianchi.png"/>
 		    				</div>
 		    			</div>
@@ -102,7 +102,7 @@
 			    			<span>开始时间:10/21 10:21</span>
 			    		</div>
 			    		<div>
-			    			<span>剩余充电时长:<i class="residue">00:00:00</i></span>
+			    			<span class="end_time">剩余充电时长:<i class="residue">00:00:00</i></span>
 			    		</div>
 			    	</div>
 			    </li>
@@ -111,8 +111,8 @@
 		
 		
 		<script type="text/javascript">
-			//倒计时
-			function countDown(times){
+			//剩余时长
+			function countDown(times,index){
 				var timer = null;
 				timer = setInterval(function(){
 					var hour = 0,minute = 0,second = 0;
@@ -125,15 +125,20 @@
 				    if (minute <= 9) minute = '0' + minute;
 				    if (second <= 9) second = '0' + second;
 				    var timeText = hour+":"+minute+":"+second;
-				    $('.residue').text(timeText);
+				    $('.residue').eq(index).text(timeText);
 				    times--;
 				    if(times<0){
-					  layer.msg("充电结束!");
+					  layer.msg("插座"+(index+1)+"充电完成!");
 					  clearInterval(timer);
+					  $('.using').eq(index).find('.use').addClass('finish');
+					  $('.using').eq(index).find('.use span').text('充电完成');
 					};
 				},1000);
 			};
-			countDown(30);
+			$('.mui-table-view').each(function(index,item){
+				var time = $(item).attr('data-time');
+				countDown(time,index);
+			});
 		</script>
 	</body>
 </html>
