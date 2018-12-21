@@ -61,21 +61,23 @@
 	    		<img src="img/eq.png"/>
 	    		<span>选择充电时长</span>
 	    	</div>
-	    	<div class="select-time">
-	    		<div class="select change">
-	    			<span>4小时</span>
-	    		</div>
-	    		<div class="select change">
-	    			<span>6小时</span>
-	    		</div>
-	    	</div>
-	    	<div class="select-time">
-	    		<div class="select change">
-	    			<span>8小时</span>
-	    		</div>
-	    		<div class="select change">
-	    			<span>12小时</span>
-	    		</div>
+	    	<div class="time_wrap">
+	    		<div class="select-time">
+		    		<div class="select change">
+		    			<span>4小时</span>
+		    		</div>
+		    		<div class="select change">
+		    			<span>6小时</span>
+		    		</div>
+		    	</div>
+		    	<div class="select-time">
+		    		<div class="select change">
+		    			<span>8小时</span>
+		    		</div>
+		    		<div class="select change">
+		    			<span>12小时</span>
+		    		</div>
+		    	</div>
 	    	</div>
 	    </div>
 	    <div class="mean">
@@ -91,7 +93,7 @@
 	<script type="text/javascript">
 		var timeLight = false;
 		var cZLight = false;
-		$('.change').on('tap',function(){
+		$('.time_wrap').on('tap','.change',function(){
 			$(this).removeClass('select').addClass('select-active').siblings().removeClass('select-active').addClass('select');
 			$(this).parent().siblings().find('.change').removeClass('select-active').addClass('select');
 			timeLight = true;
@@ -106,7 +108,7 @@
 				$('.cz img').eq(k).addClass('using');
 				$('.using').css({'pointer-events':'none'});	
 			}else{
-				$('.cz img').on('tap',function(){
+				$('.socket_bottom').on('tap','.cz img',function(){
 					$('.cz img').removeClass('tpchange');
 					$(this).addClass('tpchange');
 					for(var i=0;i<$('.cz img').length;i++){

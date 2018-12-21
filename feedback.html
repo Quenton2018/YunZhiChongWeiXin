@@ -110,7 +110,7 @@
 	    		<li class="mui-table-view-cell">
 	    			<div class="tel">
 	    				<span>联系方式：</span>
-	    				<input type="text" name="mobil" placeholder="手机号码/QQ邮箱"/>
+	    				<input type="text" name="mobil" placeholder="手机/邮箱号码"/>
 	    			</div>
 	    		</li>
 	    	</ul>
@@ -159,6 +159,7 @@
 	
 	
 	<script type="text/javascript">
+		//五星好评
 		$('.icons').on('tap','i',function(){
 		  	var index = parseInt(this.getAttribute("data-index"));
 		  	var parent = this.parentNode;
@@ -178,6 +179,7 @@
 		    var starName = $(this).parents('.icons').attr("starName");
 			document.getElementById(""+starName+"").value = starIndex;
 		});
+		//快捷输入点击事件
 		mui('.mui-scroll-wrapper').scroll();
 		mui('body').on('shown', '.mui-popover', function(e) {
 			//console.log('shown', e.detail.id);//detail为当前popover元素
@@ -185,7 +187,6 @@
 		var eLi = $('.evaluate li');
 		eLi.click(function(){
 			var Inp = $('#textarea');
-			console.log($(this).text());
 			if(Inp.val() == ''){
 				Inp.val($(this).text());
 			}else{
@@ -195,13 +196,13 @@
 			$('.mui-backdrop').hide();
 			$('#topPopover').removeClass('mui-active')
 		});
+		//照片上传
 		$(".file").on("change","input[type='file']",function(){
 			var $that = $(this);
 		    var fr = new FileReader();//创建new FileReader()对象
 		    var imgObj = this.files[0];//获取图片
 		    fr.readAsDataURL(imgObj);//将图片读取为DataURL
 			var imgName = imgObj.name;
-			console.log(imgName)
 			var Imgsrc = '';
 		    if(imgName.indexOf("jpg") != -1 || imgName.indexOf("JPG") != -1 || imgName.indexOf("PNG") != -1 || imgName.indexOf("png") != -1 || imgName.indexOf("jpeg") != -1){
 		    	fr.onload = function() {
@@ -214,16 +215,18 @@
 		        $(".showFileName1").html("您未上传文件，或者您上传文件类型有误！").show();
 		        return false
 		    };
-		    
 		});
+		//删除图片
 		$('.imglist').on("click",".close i",function(){
 			$(this).parent().hide();
 		});
+		//点击查看大图
 		$('.imglist').on("click",".close img",function(){
 		   var large_image = '<img src= ' + $(this).attr("src") + '>'; 
 		   $('.big_img').show();
 		   $('.big_img').html($(large_image).animate({'max-height': '100%', width: '100%'}, 500));
 		});
+		//关闭大图
 		$('.big_img').click(function(){
 			$('.big_img').hide(500);
 		});
@@ -240,9 +243,16 @@
                 return;
             };
             var mobile = $("input[name='mobil']").val();
+            var matio = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            var tel = /^1[34578]\d{9}$/;
             if(!vaildeParam(mobile)){
                 layer.msg("选择联系方式方便我们及时联系你!");
                 return;
+            }else{
+            	if(!(matio.test(mobile) || tel.test(mobile))){
+            		layer.msg("手机号或邮箱号有误，请重填!"); 
+					return false;
+            	}
             };
             var star = $("input[name='bzxl']").val();
             if(!vaildeParam(star)||star==0){
@@ -255,6 +265,7 @@
                 "mobile":mobile,
                 "star":star
             };
+            console.log(data)
 //          postJSON(API_URL.ApiApplyBusinessSaveApplyBusiness,data,function(res){
 //              if("0" == res.code){
 //                  layer.msg("您的反馈，我们已经收到，即将返回首页");
@@ -266,9 +277,9 @@
 //              }
 //          });
 			layer.msg("您的反馈，我们已经收到，即将返回首页...");
-            setTimeout(function(){
-                location.href = "index.html";
-            },3000);
+//          setTimeout(function(){
+//              location.href = "index.html";
+//          },3000);
 		})
 
 	</script>
