@@ -250,7 +250,8 @@
                 return;
             }else{
             	if(!(matio.test(mobile) || tel.test(mobile))){
-            		layer.msg("手机号或邮箱号有误，请重填!"); 
+            		layer.msg("手机号或邮箱号有误，请重新输入!");
+            		$("input[name='mobil']").val("");
 					return false;
             	}
             };
@@ -277,9 +278,9 @@
 //              }
 //          });
 			layer.msg("您的反馈，我们已经收到，即将返回首页...");
-//          setTimeout(function(){
-//              location.href = "index.html";
-//          },3000);
+            setTimeout(function(){
+                location.href = "index.html";
+            },3000);
 		})
 
 	</script>

@@ -41,7 +41,7 @@
 		    <h1 class="mui-title">充电记录</h1>
 		</header>
 		<div class="mui-content">
-		    <ul class="mui-table-view" data-time="">
+		    <ul class="mui-table-view" data-time="" type="true">
 			    <li class="mui-table-view-cell">
 		    		<div class="serial-number">
 		    			<div class="name_wrap">
@@ -66,15 +66,15 @@
 			    <li class="mui-table-view-cell li-padd">
 			    	<div class="start-time">
 			    		<div>
-			    			<span>开始时间:10/21 10:21</span>
+			    			<span>开始时间:2018/10/21 10:21</span>
 			    		</div>
 			    		<div>
-			    			<span class="lastTime">剩余充电时长:<i class="residue">00:00:00</i></span>
+			    			<span class="lastTime" val="">剩余充电时长:<i class="residue">00:00:00</i></span>
 			    		</div>
 			    	</div>
 			    </li>
 			</ul>
-			<ul class="mui-table-view" data-time="">
+			<ul class="mui-table-view" data-time="" type="false">
 			    <li class="mui-table-view-cell">
 		    		<div class="serial-number">
 		    			<div class="name_wrap">
@@ -99,10 +99,43 @@
 			    <li class="mui-table-view-cell li-padd">
 			    	<div class="start-time">
 			    		<div>
-			    			<span>开始时间:10/21 10:21</span>
+			    			<span>开始时间:2018/10/21 10:21</span>
 			    		</div>
 			    		<div>
-			    			<span class="lastTime">剩余充电时长:<i class="residue">00:00:00</i></span>
+			    			<span class="lastTime" val="">剩余充电时长:<i class="residue">00:00:00</i></span>
+			    		</div>
+			    	</div>
+			    </li>
+			</ul>
+			<ul class="mui-table-view" data-time="" type="true">
+			    <li class="mui-table-view-cell">
+		    		<div class="serial-number">
+		    			<div class="name_wrap">
+		    				<div>
+		    					<span class="cdz-name">充电桩编号A184137</span>
+		    					<span class="mark">3号</span>
+		    				</div>
+		    			</div>
+		    			<div class="using">
+		    				<div class="use">
+		    					<span>充电中</span>
+		    					<img src="img/dianchi.png"/>
+		    				</div>
+		    			</div>
+		    		</div>
+			    </li>
+			    <li class="mui-table-view-cell after-bord">
+			    	<div class="use_time">
+			    		充电时长: 8 小时
+			    	</div>
+			    </li>
+			    <li class="mui-table-view-cell li-padd">
+			    	<div class="start-time">
+			    		<div>
+			    			<span>开始时间:2018/10/21 10:21</span>
+			    		</div>
+			    		<div>
+			    			<span class="lastTime" val="">剩余充电时长:<i class="residue">00:00:00</i></span>
 			    		</div>
 			    	</div>
 			    </li>
@@ -112,20 +145,24 @@
 		
 		<script type="text/javascript">
 			//剩余时长	
-			var date22 = new Date('2018/12/22 19:30');
-			var date33 = new Date('2018/12/22 19:00');
-			var date222 = date22.getTime();
-			var date333 = date33.getTime();
+			var date22 = new Date('2018/12/24 17:55');
+			console.log(date22)
+			var date33 = new Date('2018/12/22 19:50');
+			var date44 = new Date('2018/12/24 14:43');
+			var date222 = date22.getTime()+1*3600;
+			var date333 = date33.getTime()+1*3600;
+			var date444 = date44.getTime()+1*3600;
 
 			$('.mui-table-view').eq(0).attr('data-time',date222);
 			$('.mui-table-view').eq(1).attr('data-time',date333);
+			$('.mui-table-view').eq(2).attr('data-time',date444);
 			console.log($('.mui-table-view').eq(0).attr('data-time'));
 			console.log($('.mui-table-view').eq(1).attr('data-time'));
+			console.log($('.mui-table-view').eq(2).attr('data-time'));
 			
-			var maxtime=null,time=null,start=null,date1=null,date2=null,s1=null,s2=null,total=null;
+			var maxtime=null,time=null,start=null,date1=null,date2=null,s1=null,s2=null,total=null,type=null;
 			$('.mui-table-view').each(function(index,item){
-				start=new Date();
-				date1 = new Date(start);
+				date1 = new Date();
 				date2 = $(item).attr('data-time');
 //				date2 = new Date('2018/12/22 19:30');
 				console.log(date2);
@@ -133,9 +170,16 @@
 //				s2 = date2.getTime();
 				total = (date2 - s1)/1000;
 				maxtime = total;
-				CountDown(maxtime,index);
+				type = $(item).attr("type");
+				console.log(type);
+				if(type == "true"){
+					CountDown(maxtime,index);
+				}else{
+					$('.using').eq(index).find('.use').addClass('finish');
+					$('.using').eq(index).find('.use span').text('充电完成');
+//					$('.lastTime').eq(index).text("结束时间:"+2018);
+				};
 			});
-			var a=null;
 			function CountDown(maxtime,index){
 				var hour = 0,minute = 0,second = 0;
 				console.log(maxtime);
@@ -151,15 +195,15 @@
 				    	 $('.residue').eq(index).text(timeText);
 						 --maxtime;
 						 console.log(maxtime);
-						
 					 }else{
 						 clearInterval(timer);
-						 layer.msg("插座充电完成!");
-						 $('.using').find('.use').addClass('finish');
-					  	 $('.using').find('.use span').text('充电完成');
+						 layer.msg("插座"+(index+1)+"充电完成!");
+						 $('.using').eq(index).find('.use').addClass('finish');
+					  	 $('.using').eq(index).find('.use span').text('充电完成');
+//					  	 $('.mui-table-view').eq(index).attr('type','false');
 					 }
 				},1000);
-		   };
+		    };
 			
 			
 		</script>

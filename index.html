@@ -132,19 +132,31 @@
 		if(arr.indexOf("oN") != -1){
 			var btnSbm = $(".btn-submit");
 			btnSbm.click(function(){
+				var czCheck = $('.tpchange').next().text();
+				var timeCheck = $('.select-active').text();
 				if ($('.tpchange').length == 0) {
 					layer.msg('请选择插座！');
 					return;
 				}else{
-					console.log($('.tpchange').next().text())
+					console.log(czCheck)
 				};
 				if ($('.select-active').length == 0) {
 					layer.msg('请选择充电时长！');
 					return;
 				}else{
-					console.log($('.select-active').text())
+					console.log(timeCheck)
 				};
-//	            location.href = "cdRecord.html";	
+				var data = {
+	                "czCheck":czCheck,
+	                "timeCheck":timeCheck
+	            };
+//	            postJSON(API_URL.ApiApplyBusinessSaveApplyBusiness,data,function(res){
+//	                if("0" == res.code){
+//						location.href = "cdRecord.html";
+//	                }else{
+//	                  layer.msg(res.msg);
+//	                }
+//	            });	
 			})
 		}else{
 			layer.msg("该充电桩暂无可用插座!");
@@ -154,7 +166,6 @@
 				$(".btn-submit").css({'opacity':'1'})
 			};
 		};
-		
 		
 		
 		
