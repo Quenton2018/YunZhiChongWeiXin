@@ -14,10 +14,11 @@
     <style type="text/css">
     	.socket,.cdtime{padding: 20px 25px;border-radius: 10px;background-color: #fff;margin-top: 24px;}
     	.socket_top img{width: 20px;height: 20px;vertical-align: middle;}
-    	.socket_bottom{width: 100%;padding: 25px 30px 0 30px;display: flex;justify-content: space-between;text-align: center;}
-    	.socket_bottom img{height: 60px;border: 1px solid transparent;border-radius: 50%;}
-    	.socket_bottom .cz{position: relative;padding-bottom: 30px;}
-    	.socket_bottom .cz .num{width: 20px;height: 20px;text-align: center;line-height: 20px;border: 1px solid #999;border-radius: 50%;position: absolute;left: 35%;top: 80px;}
+    	.socket_bottom{width: 100%;padding: 25px 5px 0 5px;margin-left: 6%;display: flex;flex-flow: row wrap;align-content: flex-start;justify-content: space-between;}
+    	.socket_bottom img{height: 40px;border: 1px solid transparent;border-radius: 10%;opacity: 1;}
+    	.socket_bottom .cz{position: relative;padding-bottom: 10px;box-sizing: border-box;flex: 0 0 25%;}
+    	.socket_bottom .cz .num{width: 20px;height: 20px;text-align: center;line-height: 20px;position: absolute;left: 10px;top: 23px;pointer-events: none;
+    		color: #a3a3a3;font-size: 12px;}
  		.cdtime .select-time{padding: 15px 25px;display: flex;justify-content: space-between;}
  		.select-time .select-active{padding: 10px 0;width:100px;border-radius: 20px;background-color: #ff6d22;color: #fff;text-align: center;}
  		.select-time .select{background-color: #f2f2f2;padding: 10px 0;width:100px;border-radius: 20px;text-align: center;}
@@ -43,16 +44,52 @@
 	    	</div>
 	    	<div class="socket_bottom">
 	    		<div class="cz" data-type="oFF">
-	    			<img src="img/CD.png"/>
+	    			<img src="img/able.png"/>
 	    			<div class="num">1</div>
 	    		</div>
 	    		<div class="cz" data-type="oN">
-	    			<img src="img/CD.png"/>
+	    			<img src="img/able.png"/>
 	    			<div class="num">2</div>
 	    		</div>
 	    		<div class="cz" data-type="oN">
-	    			<img src="img/CD.png"/>
+	    			<img src="img/able.png"/>
 	    			<div  class="num">3</div>
+	    		</div>
+	    		<div class="cz" data-type="oFF">
+	    			<img src="img/able.png"/>
+	    			<div class="num">4</div>
+	    		</div>
+	    		<div class="cz" data-type="oFF">
+	    			<img src="img/able.png"/>
+	    			<div class="num">5</div>
+	    		</div>
+	    		<div class="cz" data-type="oN">
+	    			<img src="img/able.png"/>
+	    			<div  class="num">6</div>
+	    		</div>
+	    		<div class="cz" data-type="oFF">
+	    			<img src="img/able.png"/>
+	    			<div class="num">7</div>
+	    		</div>
+	    		<div class="cz" data-type="oN">
+	    			<img src="img/able.png"/>
+	    			<div class="num">8</div>
+	    		</div>
+	    		<div class="cz" data-type="oN">
+	    			<img src="img/able.png"/>
+	    			<div  class="num">9</div>
+	    		</div>
+	    		<div class="cz" data-type="oFF">
+	    			<img src="img/able.png"/>
+	    			<div class="num">10</div>
+	    		</div>
+	    		<div class="cz" data-type="oN">
+	    			<img src="img/able.png"/>
+	    			<div class="num">11</div>
+	    		</div>
+	    		<div class="cz" data-type="oFF">
+	    			<img src="img/able.png"/>
+	    			<div  class="num">12</div>
 	    		</div>
 	    	</div>
 	    </div>
@@ -104,8 +141,9 @@
 		for(var k=0;k<$('.cz img').length;k++){
 			var cdType = $('.cz img').eq(k).parent().attr('data-type');
 			if(cdType == 'oFF'){
-				$('.cz img').eq(k).attr({'src':'img/CDpass.png'});
+				$('.cz img').eq(k).attr({'src':'img/pass.png'});
 				$('.cz img').eq(k).addClass('using');
+				$('.cz img').eq(k).next().css({'color':'#fff'})
 				$('.using').css({'pointer-events':'none'});	
 			}else{
 				$('.socket_bottom').on('tap','.cz img',function(){
@@ -115,14 +153,14 @@
 						var flag = [];
 						flag = $('.cz img').eq(i).hasClass("tpchange");
 						if(flag == true){
-							$('.cz img').eq(i).attr({'src':'img/CDchange.png'});
-							$('.using').attr({'src':'img/CDpass.png'});
+							$('.cz img').eq(i).attr({'src':'img/pass.png'});
+							$('.using').attr({'src':'img/pass.png'});
 							cZLight = true;
 							charge();
 							$('.using').css({'pointer-events':'none'});					//阻止div被选中
 						}else{
-							$('.cz img').eq(i).attr({'src':'img/CD.png'});
-							$('.using').attr({'src':'img/CDpass.png'});
+							$('.cz img').eq(i).attr({'src':'img/able.png'});
+							$('.using').attr({'src':'img/pass.png'});
 						};
 					};
 				})
@@ -157,6 +195,7 @@
 //	                  layer.msg(res.msg);
 //	                }
 //	            });	
+//				location.href = "cdRecord.html";
 			})
 		}else{
 			layer.msg("该充电桩暂无可用插座!");
