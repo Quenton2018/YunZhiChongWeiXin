@@ -28,6 +28,7 @@
  		.mean span:last-child{font-size: 12px;}
  		.mui-bar .feedback{margin-top: 12px;color: #fff;font-size: 14px;}
  		.btn-submit{opacity: 0.5;}
+ 		.btn-submit .mui-btn-primary{background-color: transparent;border-color: transparent;}
   </style>
 </head>
 <body>
@@ -123,7 +124,7 @@
 	    </div>
 	</div>
 	<footer class="mui-bar mui-bar-footer btn-submit">
-		<span>开始充电</span>
+		<button type="button" class="mui-btn mui-btn-block mui-btn-primary">开始充电</button>
 	</footer>
 	
 	
@@ -170,32 +171,34 @@
 		if(arr.indexOf("oN") != -1){
 			var btnSbm = $(".btn-submit");
 			btnSbm.click(function(){
-				var czCheck = $('.tpchange').next().text();
-				var timeCheck = $('.select-active').text();
-				if ($('.tpchange').length == 0) {
-					layer.msg('请选择插座！');
-					return;
-				}else{
-					console.log(czCheck)
-				};
-				if ($('.select-active').length == 0) {
-					layer.msg('请选择充电时长！');
-					return;
-				}else{
-					console.log(timeCheck)
-				};
-				var data = {
-	                "czCheck":czCheck,
-	                "timeCheck":timeCheck
-	            };
-//	            postJSON(API_URL.ApiApplyBusinessSaveApplyBusiness,data,function(res){
-//	                if("0" == res.code){
-//						location.href = "cdRecord.html";
-//	                }else{
-//	                  layer.msg(res.msg);
-//	                }
-//	            });	
-//				location.href = "cdRecord.html";
+				if($('.mui-disabled').length == 0){
+					var czCheck = $('.tpchange').next().text();
+					var timeCheck = $('.select-active').text();
+					if ($('.tpchange').length == 0) {
+						layer.msg('请选择插座！');
+						return;
+					}else{
+						console.log(czCheck)
+					};
+					if ($('.select-active').length == 0) {
+						layer.msg('请选择充电时长！');
+						return;
+					}else{
+						console.log(timeCheck)
+					};
+					var data = {
+		                "czCheck":czCheck,
+		                "timeCheck":timeCheck
+		            };
+	//	            postJSON(API_URL.ApiApplyBusinessSaveApplyBusiness,data,function(res){
+	//	                if("0" == res.code){
+	//						location.href = "cdRecord.html";
+	//	                }else{
+	//	                  layer.msg(res.msg);
+	//	                }
+	//	            });	
+	//				location.href = "cdRecord.html";
+				}else{layer.msg('不要点那么快');}
 			})
 		}else{
 			layer.msg("该充电桩暂无可用插座!");
@@ -206,6 +209,12 @@
 			};
 		};
 		
+		mui(document.body).on('tap', '.mui-btn', function(e) {
+            mui(this).button('loading');
+            setTimeout(function() {
+                mui(this).button('reset');
+            }.bind(this), 2000);
+        });
 		
 		
 	</script>
