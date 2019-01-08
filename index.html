@@ -198,6 +198,10 @@
 	//	                }
 	//	            });	
 	//				location.href = "cdRecord.html";
+					mui(this).button('loading');
+		            setTimeout(function() {
+		                mui(this).button('reset');
+		            }.bind(this), 3000);
 				}else{layer.msg('不要点那么快');}
 			})
 		}else{
@@ -209,12 +213,6 @@
 			};
 		};
 		
-		mui(document.body).on('tap', '.mui-btn', function(e) {
-            mui(this).button('loading');
-            setTimeout(function() {
-                mui(this).button('reset');
-            }.bind(this), 2000);
-        });
 		
 		
 	</script>
